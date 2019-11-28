@@ -24,6 +24,6 @@ public class SpawnPoints : MonoBehaviour
     {
         bullet = Instantiate(bulletPrefab,bulletSpawn.position,bulletSpawn.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward*70;
-        Destroy(bullet,8.0f);
+        //Destroy(bullet,8.0f);
     }
 }

@@ -9,7 +9,7 @@ public class PhotonPlayer : MonoBehaviour
     public PhotonView PV;
     public GameObject myAvatar;
     public int myTeam;
-    
+    public int score;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +17,7 @@ public class PhotonPlayer : MonoBehaviour
         if(PV.IsMine)
         {
             PV.RPC("RPC_GetTeam",RpcTarget.MasterClient);
+            
         } 
         
     }
@@ -32,7 +33,7 @@ public class PhotonPlayer : MonoBehaviour
                 if(PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","PlayerAvatar"),GameSetup.GS.spawnPointsTeamOne[spawnPicker].position,GameSetup.GS.spawnPointsTeamOne[spawnPicker].rotation,0);
-                    
+                    PV.RPC("RPC_SyncScore",RpcTarget.All,myTeam);
                 }
             }
             else if (myTeam == 2)
@@ -41,7 +42,7 @@ public class PhotonPlayer : MonoBehaviour
                 if(PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","PlayerAvatar"),GameSetup.GS.spawnPointsTeamTwo[spawnPicker].position,GameSetup.GS.spawnPointsTeamTwo[spawnPicker].rotation,0);
-                    
+                    PV.RPC("RPC_SyncScore",RpcTarget.All,myTeam);
                 }
             }
             else if (myTeam == 3)
@@ -50,7 +51,7 @@ public class PhotonPlayer : MonoBehaviour
                 if(PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","PlayerAvatar"),GameSetup.GS.spawnPointsTeamThree[spawnPicker].position,GameSetup.GS.spawnPointsTeamThree[spawnPicker].rotation,0);
-                    
+                    PV.RPC("RPC_SyncScore",RpcTarget.All,myTeam);
                 }
             }
             else if (myTeam == 4)
@@ -59,7 +60,7 @@ public class PhotonPlayer : MonoBehaviour
                 if(PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","PlayerAvatar"),GameSetup.GS.spawnPointsTeamFour[spawnPicker].position,GameSetup.GS.spawnPointsTeamFour[spawnPicker].rotation,0);
-                    
+                    PV.RPC("RPC_SyncScore",RpcTarget.All,myTeam);
                 }
             }
         }
@@ -71,6 +72,7 @@ public class PhotonPlayer : MonoBehaviour
     {
         myTeam = GameSetup.GS.nextPlayersTeam;
         GameSetup.GS.UpdateTeam();
+        
         PV.RPC("RPC_SentTeam", RpcTarget.OthersBuffered,myTeam);
     }
 
@@ -79,5 +81,12 @@ public class PhotonPlayer : MonoBehaviour
     {
         myTeam = whichTeam;
     }
+    [PunRPC]
+    void RPC_SyncScore (int team)
+    {
+        GameSetup.GS.puntuacion[team].text = PhotonNetwork.NickName+":20";
+        //GameSetup.GS.UpdatePuntuacion();
+    }
+
 
 }

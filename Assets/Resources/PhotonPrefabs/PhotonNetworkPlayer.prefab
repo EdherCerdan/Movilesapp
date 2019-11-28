@@ -69,3 +69,4 @@ MonoBehaviour:
   PV: {fileID: 2746803702748625062}
   myAvatar: {fileID: 0}
   myTeam: 0
+  score: 0

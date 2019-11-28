@@ -22,14 +22,16 @@ public class GameSetup : MonoBehaviour
     public int scoreTotal;
     public Text[] playerScoreText;
     public Transform[] scoreOrder;
+    
 
 
-    public Text puntuacion;
+    public Text[] puntuacion;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        UpdatePuntuacion();
+        //UpdatePuntuacion();
     }
 
     // Update is called once per frame
@@ -63,14 +65,17 @@ public class GameSetup : MonoBehaviour
     {
         if(nextPlayersTeam == 1)
         {
+            //puntuacion[1].text = PhotonNetwork.NickName;
             nextPlayersTeam= 2;
         }
         else if(nextPlayersTeam == 2)
         {
+            //puntuacion[2].text = PhotonNetwork.NickName;
             nextPlayersTeam = 3;
         }
         else if(nextPlayersTeam == 3)
         {
+            //puntuacion[3].text = PhotonNetwork.NickName;
             nextPlayersTeam = 4;
         }
     }
@@ -114,7 +119,14 @@ public class GameSetup : MonoBehaviour
 
     public void UpdatePuntuacion()
     {
-        puntuacion.text = PhotonNetwork.CountOfPlayers.ToString();
+        
+        for(int i=0; i<4;i++)
+        {
+            string named;
+            named = PhotonNetwork.NickName;
+            puntuacion[i].text = string.Concat(named , ": 20 ");
+        }
+        
     }
 
 }
